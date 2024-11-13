@@ -8,12 +8,18 @@ const Home = () => {
 
     const [books, setBooks] = useState([])
     const [refresh, setRefresh] = useState(false)
+    const [loading, setLoading] = useState(false)
     useEffect(() => {
         const bookList = async () => {
+            setLoading(true)
             await customAxios.get('/api/v1/books')
                 .then((result) => {
                     setBooks(result.data.data)
-                }).catch(error => console.log(error))
+                    setLoading(false)
+                }).catch((error) => {
+                    console.log(error)
+                    setLoading(true)
+                })
         };
         bookList()
     }, [refresh])
@@ -25,12 +31,34 @@ const Home = () => {
         setRefresh(!refresh)
     }
 
+    
     const dummyImage = 'https://images.squarespace-cdn.com/content/v1/563890dce4b0facc12851d8f/1518946695868-3T5CPZ9W9WJURE2AGWPI/ZiSS+Front.jpg';
 
     return (
         <div>
             <Navbar />
             <div className="p-6 bg-slate-950">
+                {loading?(<div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-700 p-14">
+    {[...Array(10)].map((_, index) => (
+        <div key={index} className="bg-gray-800 rounded-lg shadow-md p-4 animate-pulse">
+            <div className="flex justify-center items-center mb-4">
+                <div className="w-[200px] h-[300px] bg-gray-700 rounded-lg"></div>
+            </div>
+            <div className="h-6 bg-gray-700 rounded mb-2 w-3/4"></div>
+            <div className="text-white text-sm mb-2 font-semibold">
+                <div className="h-4 bg-gray-700 rounded mb-2 w-1/2"></div>
+                <div className="h-4 bg-gray-700 rounded mb-2 w-full"></div>
+            </div>
+            <div className="flex items-center space-x-4">
+                <div className="h-8 bg-gray-700 rounded-full w-1/4"></div>
+                <div className="h-8 bg-gray-700 rounded-full w-1/4"></div>
+            </div>
+            <div className='flex justify-end'>
+                <div className="h-8 bg-gray-700 rounded-md w-1/4"></div>
+            </div>
+        </div>
+    ))}
+</div>):(
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-700 p-14">
                     {books.map((book, index) => (
                         <div key={index} className="bg-gray-800 rounded-lg shadow-md p-4">
@@ -62,6 +90,7 @@ const Home = () => {
                         </div>
                     ))}
                 </div>
+                )}
             </div>
             <Footer />
         </div>
