@@ -9,7 +9,7 @@ const Navbar = () => {
     };
 
     return (
-        <nav className="flex items-center justify-between w-full p-4 sm:p-6 md:p-8 bg-slate-800 text-white">
+        <nav className="flex items-center justify-between w-full p-4 sm:p-6 md:p-8 bg-slate-900 text-white">
             <div className="hidden md:flex items-center space-x-6">
                 <a href="/" className="text-gray-500 hover:text-gray-400">Home</a>
                 <a href="#" className="text-gray-500 hover:text-gray-400">News</a>

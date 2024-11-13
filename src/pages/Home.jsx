@@ -34,11 +34,14 @@ const Home = () => {
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6 border-t border-gray-700 p-14">
                     {books.map((book, index) => (
                         <div key={index} className="bg-gray-800 rounded-lg shadow-md p-4">
-                            <img
-                                src={book.image || dummyImage}
-                                alt={book.title}
-                                className="w-[200px] h-[300px] rounded-lg object-cover mb-4"
-                            />
+                            <div className="flex justify-center items-center mb-4">
+                                <img
+                                    src={book.image || dummyImage}
+                                    alt={book.title}
+
+                                    className="w-[200px] h-[300px] rounded-lg object-cover"
+                                />
+                            </div>
                             <h3 className="text-lg font-semibold mb-2">{book.title}</h3>
                             <div className="text-white text-sm mb-2 font-semibold">
                                 <p>{book.author}</p>

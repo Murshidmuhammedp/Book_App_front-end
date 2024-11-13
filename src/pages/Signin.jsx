@@ -14,7 +14,7 @@ const SignIn = () => {
     };
 
     return (
-        <div className='min-h-screen w-full bg-black'>
+        <div className='h-screen w-full bg-black  flex items-center justify-center'>
             <div className="flex flex-col md:flex-row w-full items-center bg-black-800 text-white md:justify-center md:px-16">
 
                 <div className="order-1 flex items-center w-full md:w-1/2 p-2 md:p-8">
