@@ -3,6 +3,8 @@ import Navbar from '../components/Navbar'
 import Footer from '../components/Footer'
 import { customAxios } from '../confiq/axios'
 import toast from 'react-hot-toast'
+import { confirmAlert } from 'react-confirm-alert';
+import 'react-confirm-alert/src/react-confirm-alert.css';
 
 const Home = () => {
 
@@ -25,22 +27,35 @@ const Home = () => {
     }, [refresh])
 
     const handlDelete = async (id) => {
-        const userConfirmed = window.confirm("Are you sure you want to delete this book?");
-
-        if (userConfirmed) {
-            try {
-                const response = await customAxios.delete(`/api/v1/books/${id}`)
-                console.log(response)
-                toast.success(response.data.message)
-                setRefresh(!refresh)
-            } catch (error) {
-                console.error(error);
-                toast.error("Failed to delete the book.");
-            }
-        } else {
-            toast.info("Delete action canceled.");
-        }
-    }
+        confirmAlert({
+            title: 'Confirm to Delete',
+            message: 'Are you sure you want to delete this book?',
+            buttons: [
+                {
+                    label: 'Yes',
+                    onClick: async () => {
+                        try {
+                            const response = await customAxios.delete(`/api/v1/books/${id}`)
+                            console.log(response)
+                            toast.success(response.data.message)
+                            setRefresh(!refresh)
+                        } catch (error) {
+                            console.error(error);
+                            toast.error("Failed to delete the book.");
+                        }
+                    }
+                },
+                {
+                    label: 'No',
+                    onClick: () => {
+                        toast('Delete action canceled.', {
+                            icon: 'ℹ️',
+                        });
+                    }
+                }
+            ]
+        });
+    };
 
 
     const dummyImage = 'https://images.squarespace-cdn.com/content/v1/563890dce4b0facc12851d8f/1518946695868-3T5CPZ9W9WJURE2AGWPI/ZiSS+Front.jpg';
@@ -104,7 +119,7 @@ const Home = () => {
                 )}
             </div>
             <Footer />
-        </div>
+        </div >
     )
 }
 
